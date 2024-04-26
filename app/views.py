@@ -15,8 +15,8 @@ def insert_topic(request):
 
 
 
-
-
+# We have got parant table Object by using get_or_create
+'''
 def insert_webpage(request):
     tn=input('enter tn')
     n=input('enter name')
@@ -30,6 +30,42 @@ def insert_webpage(request):
     WO.save()
 
     return HttpResponse('Webpage is Created')
+
+
+'''
+def insert_webpage(request):
+    tn=input('enter tn')
+    n=input('enter name')
+    u=input('enter url')
+    e=input('enter email')
+
+    #TO=Topic.objects.get(topic_name=tn)
+    '''We can use get method to get the Parent Table Object but if parent table object is 
+    not available it throws an error'''
+    LTO=Topic.objects.filter(topic_name=tn)
+    if LTO:
+        TO=LTO[0]
+        WO=Webpage.objects.get_or_create(topic_name=TO,name=n,url=u,email=e)[0]
+        WO.save()
+        return HttpResponse('Webpage is Created')
+    else:
+        return HttpResponse('Given Topic is Not present in My Parent Table')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
